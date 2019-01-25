@@ -24,7 +24,7 @@ class Index extends Component {
 
   config = {
     navigationBarTitleText: '每日一句',
-    enablePullDownRefresh: true,
+    // enablePullDownRefresh: true,
   }
 
   constructor(props) {
@@ -84,16 +84,18 @@ class Index extends Component {
   query() {
     const { loadData } = this.props;
     loadData(this.state.page).then((res) => {
-      Taro.pageScrollTo({
-        scrollTop: 0,
-        duration: 300
-      });
       // Taro.stopPullDownRefresh();
       if (res) {
         this.setState({
           loading: false
         });
         this.forceUpdate();
+        setTimeout(() => {
+          Taro.pageScrollTo({
+            scrollTop: 0,
+            duration: 100
+          });
+        }, 150);
         return;
       }
       this.setState({
