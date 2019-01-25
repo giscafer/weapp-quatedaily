@@ -1,0 +1,91 @@
+.bg {
+    width: 100%;
+    height: 100%;
+}
+
+.bg-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    opacity: 0.2;
+}
+
+.date-show {
+    text {
+        color: #38c6aa;
+    }
+    .day {
+        font-size: 48px;
+    }
+    .month {
+        font-size: 36px;
+    }
+    .year {
+        font-size: 36px;
+    }
+}
+
+.quote {
+    position: absolute;
+    bottom: 150px;
+    padding: 0 32px 60px 32px;
+    .content {
+        display: block;
+        color: #fff;
+        font-size: 36px;
+    }
+    .trans {
+        display: block;
+        color: #fff;
+        margin-top: 20px;
+        font-size: 32px;
+    }
+    .author {
+        display: block;
+        color: #fff;
+        margin-top: 20px;
+        text-align: right;
+    }
+}
+
+.share {
+    position: fixed;
+    top: 32px;
+    right: 22px;
+    height: 38px;
+    width: 38px;
+}
+
+.link {
+    position: fixed;
+    top: 28px;
+    right: 80px;
+    height: 42px;
+    width: 42px;
+}
+
+.copy {
+    position: fixed;
+    top: 34px;
+    right: 150px;
+    height: 32px;
+    width: 32px;
+}
+
+button::after {
+    border: none;
+}
+
+button {
+    background-color: transparent;
+}
+
+.loading {
+    display: block;
+    width: 100px;
+    text-align: center;
+    margin: 5px auto;
+}

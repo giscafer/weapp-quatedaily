@@ -1,27 +1,33 @@
 import { observable, action } from 'mobx';
 import dayjs from 'dayjs';
 import promiseHandler from '../utils/promiseHandler';
-import { anonymousPost } from '../services/http.services';
+import ApiBase from '../services/ApiBase';
+import { SHANBEI_URL } from '../config/config';
 
 
-class quoteDailySore {
+class quoteDailySore extends ApiBase {
 
   constructor() {
+    super(SHANBEI_URL)
   }
 
   @observable data = {};
 
 
   @action.bound
-  async loadData() {
-    let daystr = dayjs().format('YYYY-DD-MM');
-    let [err, result] = await promiseHandler(anonymousPost(`/quote/quotes/${daystr}`));
-    this.loading = false;
+  async loadData(page) {
+    let daystr = dayjs().subtract(page, 'day').format('YYYY-MM-DD');
+    console.log(daystr)
+    let [err, result] = await promiseHandler(this.get(`/quote/quotes/${daystr}/`));
     if (err || !result) {
       // TODO:查询错误提示
-      return;
+      return false;
     }
-    this.data = result;
+    if (result.status_code === 0) {
+      this.data = result.data;
+      return true;
+    }
+    return false;
   }
 
 }

@@ -18,8 +18,8 @@ export function showToast (title = '操作成功', duration = 2000 , icon = 'non
       icon: icon,
       duration: duration,
       mask: mask
-    }).then(_ => resolve())
-      .catch(_ => reject())
+    }).then(() => resolve())
+      .catch(()=> reject())
   })
 }
 

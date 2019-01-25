@@ -77,7 +77,10 @@ function _post(endpoint, params, _showLoading = true, token = {}) {
   });
 };
 
-export const get = (URL, endpoint = '') => {
+export const get = (URL, endpoint = '', _showLoading = true) => {
+  if (_showLoading) {
+    showLoading('正在加载...');
+  }
   return new Promise((resolve, reject) => {
     Taro.request({
       url: endpoint ? `${BASEURL}${endpoint}` : URL,
@@ -87,7 +90,9 @@ export const get = (URL, endpoint = '') => {
       },
     })
       .then(res => {
-        // TODO
+        if (_showLoading) {
+          Taro.hideLoading();
+        }
         const { statusCode, data } = res;
         if (statusCode !== 200) {
           return reject(res);
@@ -96,6 +101,9 @@ export const get = (URL, endpoint = '') => {
       })
       .catch(err => {
         // do error handler
+        if (_showLoading) {
+          Taro.hideLoading();
+        }
         return reject(err);
       });
   });
