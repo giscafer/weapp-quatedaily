@@ -90,12 +90,12 @@ class Index extends Component {
           loading: false
         });
         this.forceUpdate();
-        setTimeout(() => {
-          Taro.pageScrollTo({
-            scrollTop: 0,
-            duration: 100
-          });
-        }, 150);
+        /*  setTimeout(() => {
+           Taro.pageScrollTo({
+             scrollTop: 0,
+             duration: 100
+           });
+         }, 150); */
         return;
       }
       this.setState({
