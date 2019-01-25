@@ -23,7 +23,8 @@ import shareIcon from '../../assets/images/share.png';
 class Index extends Component {
 
   config = {
-    navigationBarTitleText: '每日一句'
+    navigationBarTitleText: '每日一句',
+    enablePullDownRefresh: true,
   }
 
   constructor(props) {
@@ -61,6 +62,15 @@ class Index extends Component {
 
   componentDidShow() { }
 
+  /*   onPullDownRefresh() {
+      if (this.state.page === 0) return;
+      this.setState({
+        loading: true,
+        page: this.state.page - 1,
+      }, () => {
+        this.query();
+      });
+    } */
 
   onReachBottom() {
     this.setState({
@@ -78,6 +88,7 @@ class Index extends Component {
         scrollTop: 0,
         duration: 300
       });
+      // Taro.stopPullDownRefresh();
       if (res) {
         this.setState({
           loading: false
