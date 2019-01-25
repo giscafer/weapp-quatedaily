@@ -14,17 +14,21 @@
 }
 
 .date-show {
+    margin-bottom: 20px;
     text {
         color: #38c6aa;
     }
     .day {
-        font-size: 48px;
+        font-weight: 500;
+        font-size: 72px;
     }
     .month {
         font-size: 36px;
+        margin-left: 15px;
     }
     .year {
-        font-size: 36px;
+        font-size: 32px;
+        margin-left: 15px;
     }
 }
 
@@ -51,6 +55,14 @@
     }
 }
 
+.down {
+    position: fixed;
+    top: 32px;
+    right: 212px;
+    height: 38px;
+    width: 38px;
+}
+
 .share {
     position: fixed;
     top: 32px;
@@ -69,10 +81,10 @@
 
 .copy {
     position: fixed;
-    top: 34px;
+    top: 32px;
     right: 150px;
-    height: 32px;
-    width: 32px;
+    height: 36px;
+    width: 36px;
 }
 
 button::after {

@@ -8,6 +8,7 @@ import { copy } from '../../utils/clipboard';
 
 import './index.scss'
 
+import downloadIcon from '../../assets/images/download.png';
 import callenderIcon from '../../assets/images/callender.png';
 import copyIcon from '../../assets/images/copy.png';
 import shareIcon from '../../assets/images/share.png';
@@ -35,7 +36,11 @@ class Index extends Component {
     }
   }
 
-  componentWillMount() { }
+  componentWillMount() {
+    this.setState({
+      page: this.$router.params.page || 0,
+    });
+  }
 
 
   componentDidMount() {
@@ -96,26 +101,31 @@ class Index extends Component {
     if (origin_img_urls[0]) {
       imgUrl = origin_img_urls[0].replace('@!fhd_webp', '');
     }
-
-    let date = dayjs(assign_date);
-    const day = date.getDay();
-    const month = date.getMonth();
-    const year = date.getYear();
+    let day = '';
+    let year = '';
+    let month = '';
+    if (assign_date) {
+      let date = dayjs(assign_date);
+      day = date.date();
+      month = date.format('MMM');
+      year = date.year();
+    }
 
     return (
       <View className='index'>
         <Image src={imgUrl} className='bg' style={styleStr}></Image>
         <View className='bg-modal' style={styleStr}> </View>
-        <View className='date-show'>
-          <Text className='day'>{day}</Text>
-          <Text className='month'>{month}</Text>
-          <Text className='year'>{year}</Text>
-        </View>
         <View className='quote'>
+          <View className='date-show'>
+            <Text className='day'>{day}</Text>
+            <Text className='month'>{month}.</Text>
+            <Text className='year'>{year}</Text>
+          </View>
           <Text className='content'>{content}</Text>
           <Text className='trans'>{translation}</Text>
           <Text className='author'>—— {author}</Text>
         </View>
+        {/* <Image src={downloadIcon} className='down' onClick={this.downHandler.bind(this, { content, translation, author })}></Image> */}
         <Image src={callenderIcon} className='link' onClick={this.changeDate.bind(this, { content, translation, author })}></Image>
         <Image src={copyIcon} className='copy' onClick={this.copyHandler.bind(this, { content, translation, author })}></Image>
         <Image src={shareIcon} className='share'></Image>
@@ -130,13 +140,27 @@ class Index extends Component {
   }
 
   changeDate() {
-
+    this.setState({
+      page: 0
+    }, () => {
+      this.query();
+    })
   }
 
+  downHandler() {
+
+  }
 
   copyHandler({ content, translation, author }) {
     let text = `${content}\n${translation}\n ——${author}`;
     copy(text);
+  }
+
+  onShareAppMessage() {
+    return {
+      title: `每日一句-鸡汤老师`,
+      path: `/pages/index/index?page=${this.state.page}`
+    }
   }
 }
 
