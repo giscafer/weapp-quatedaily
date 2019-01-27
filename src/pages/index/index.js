@@ -72,14 +72,14 @@ class Index extends Component {
       });
     } */
 
-  onReachBottom() {
+  /* onReachBottom() {
     this.setState({
       loading: true,
       page: 1 + this.state.page,
     }, () => {
       this.query();
     })
-  }
+  } */
 
   query() {
     const { loadData } = this.props;
@@ -148,9 +148,34 @@ class Index extends Component {
             <AtActivityIndicator content='加载中...' ></AtActivityIndicator>
           </View>
         }
+        <View className='operate'>
+          <AtIcon value='chevron-left' size='30' color='#F00' onClick={this.preview.bind(this)}></AtIcon>
+          <AtIcon value='chevron-right' size='30' color='#F00' onClick={this.next.bind(this)}></AtIcon>
+          {/* <Button>往后</Button> */}
+        </View>
       </View>
     )
   }
+
+  preview() {
+    let count=this.state.page - 1;
+    this.setState({
+      loading: true,
+      page: count > 0 ? count : 0,
+    }, () => {
+      this.query();
+    })
+  }
+
+  next() {
+    this.setState({
+      loading: true,
+      page: 1 + this.state.page,
+    }, () => {
+      this.query();
+    })
+  }
+
 
   changeDate() {
     this.setState({
