@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import { AtActivityIndicator } from 'taro-ui';
+import { AtActivityIndicator ,AtButton} from 'taro-ui';
 import { toJS } from 'mobx';
 import dayjs from 'dayjs';
 import { copy } from '../../utils/clipboard';
@@ -149,9 +149,8 @@ class Index extends Component {
           </View>
         }
         <View className='operate'>
-          <AtIcon value='chevron-left' size='30' color='#F00' onClick={this.preview.bind(this)}></AtIcon>
-          <AtIcon value='chevron-right' size='30' color='#F00' onClick={this.next.bind(this)}></AtIcon>
-          {/* <Button>往后</Button> */}
+          <AtButton onClick={this.preview.bind(this)} type='secondary' size='small' disabled={this.state.page===0}>{this.state.page===0?'今天':'上一句'}</AtButton>
+          <AtButton onClick={this.next.bind(this)} type='secondary' size='small' className='right'>下一句</AtButton>
         </View>
       </View>
     )

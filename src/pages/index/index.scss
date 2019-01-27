@@ -34,7 +34,7 @@
 
 .quote {
     position: absolute;
-    bottom: 150px;
+    bottom: 180px;
     padding: 0 32px 60px 32px;
     .content {
         display: block;
@@ -105,5 +105,16 @@ button {
 .operate {
     position: fixed;
     bottom: 50px;
-    margin:0 auto;
+    left: 35%;
+    .at-button {
+        display: inline-block;
+    }
+    .at-button--secondary{
+        background-color: transparent!important;
+        color: #38c6aa;
+        border-color: #38c6aa!important;
+    }
+    .right {
+        margin-left: 50px;
+    }
 }
