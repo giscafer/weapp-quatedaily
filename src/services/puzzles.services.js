@@ -23,18 +23,19 @@ const IMAGE_PUZZLES_STYLE = {
     width: 788,
     height: 1382,
     thumbSize: 235,
-    topTextHeight: 200,
+    topTextHeight: 200
   },
   // 单张图
   single_graph: {
-    width: 1000,
-    height: 1285,
-    topTextHeight: 200,
+    width: 527,
+    height: 937,
+    topTextHeight: 0
+    // topTextHeight: 200
   },
   // 合成4图
   composite_four_graph: {
-    height: 1080,
-  },
+    height: 1080
+  }
 };
 
 export const html2Canvas = html => {
@@ -59,7 +60,7 @@ export const images2Canvas = options => {
     if (puzzlesType === 'composite_graph') {
       compositeGraph(res, canvasId, description);
     } else if (puzzlesType === 'single_graph') {
-      singleGraph(res[0], canvasId, description);
+      singleGraph(res, canvasId, description);
     }
   });
 };
@@ -91,11 +92,16 @@ export const saveCanvasToPhotosAlbum = canvasId => {
 function compositeGraph(res, canvasId, desc) {
   const ctx = Taro.createCanvasContext(canvasId);
   Taro.showLoading({
-    title: '正在拼图…',
+    title: '正在拼图…'
   });
   // console.log(res);
   // 大小
-  const { width, height, thumbSize, topTextHeight } = IMAGE_PUZZLES_STYLE.composite_graph;
+  const {
+    width,
+    height,
+    thumbSize,
+    topTextHeight
+  } = IMAGE_PUZZLES_STYLE.composite_graph;
   const [img1, img2, img3, img4] = res;
   const imageHeight = height - thumbSize - topTextHeight - 40;
   const imageZoom = new ImageZoom(img1.width, img1.height, width, imageHeight);
@@ -104,7 +110,14 @@ function compositeGraph(res, canvasId, desc) {
   ctx.fillRect(0, 0, width, height);
   // console.log(imageZoom);
   ctx.strokeStyle = '#aaa';
-  drawImageAndRect(ctx, img1.path, 20, topTextHeight, imageZoom.width - 40, imageZoom.height);
+  drawImageAndRect(
+    ctx,
+    img1.path,
+    20,
+    topTextHeight,
+    imageZoom.width - 40,
+    imageZoom.height
+  );
   // 文本
   ctx.setTextAlign('left');
   ctx.setFillStyle('#000');
@@ -121,13 +134,27 @@ function compositeGraph(res, canvasId, desc) {
   const offsetY = height - thumbSize - 20;
   ctx.strokeStyle = '#aaa';
   drawImageAndRect(ctx, img2.path, 20, offsetY, thumbSize, thumbSize);
-  drawImageAndRect(ctx, img3.path, thumbSize + 20 + 20, offsetY, thumbSize, thumbSize);
-  drawImageAndRect(ctx, img4.path, thumbSize * 2 + 20 * 2 + 20, offsetY, thumbSize, thumbSize);
+  drawImageAndRect(
+    ctx,
+    img3.path,
+    thumbSize + 20 + 20,
+    offsetY,
+    thumbSize,
+    thumbSize
+  );
+  drawImageAndRect(
+    ctx,
+    img4.path,
+    thumbSize * 2 + 20 * 2 + 20,
+    offsetY,
+    thumbSize,
+    thumbSize
+  );
 
   ctx.stroke();
   ctx.draw(false, () => {
     Taro.showLoading({
-      title: '保存到本地……',
+      title: '保存到本地……'
     });
     saveCanvasToPhotosAlbum(canvasId);
   });
@@ -135,41 +162,69 @@ function compositeGraph(res, canvasId, desc) {
 
 /**
  * 拼图，单图+描述
- * @param {Obejct} image 图片对象
+ * @param {Obejct} images 图片对象
  * @param {*} canvasId canvas id
  * @param {Object} desc product description
  */
-function singleGraph(image, canvasId, desc) {
+function singleGraph(images, canvasId, desc) {
+  let image = images;
+  let image2 = null;
+  let textTop = 500;
+  let dx = 0;
+  if (Array.isArray(images)) {
+    image = images[0];
+    image2 = images[1];
+  }
   const ctx = Taro.createCanvasContext(canvasId);
   Taro.showLoading({
-    title: '正在拼图…',
+    title: '正在拼图…'
   });
   // console.log(res);
   // 大小
   const { width, height, topTextHeight } = IMAGE_PUZZLES_STYLE.single_graph;
-  const imageHeight = height - topTextHeight - 20;
-  const imageZoom = new ImageZoom(image.width, image.height, width, imageHeight);
+  const imageHeight = height - topTextHeight;
+  const imageZoom = new ImageZoom(
+    image.width,
+    image.height,
+    width,
+    imageHeight
+  );
   imageZoom.setMaxWidthAndHeight();
   ctx.setFillStyle('#fff');
   ctx.fillRect(0, 0, width, height);
   ctx.strokeStyle = '#aaa';
-  drawImageAndRect(ctx, image.path, 20, topTextHeight, imageZoom.width - 40, imageZoom.height);
+  drawImageAndRect(
+    ctx,
+    image.path,
+    0,
+    topTextHeight,
+    imageZoom.width,
+    imageZoom.height
+  );
+  if (desc.content && desc.content.length > 95) {
+    dx = 30;
+  }
+  ctx.setFillStyle('rgba(0, 0, 0, 0.5)');
+  ctx.fillRect(0, textTop - 40, width, 200 + dx);
   // 文本
   ctx.setTextAlign('left');
-  ctx.setFillStyle('#000');
+  ctx.setFillStyle('#fff');
   ctx.setFontSize(22);
-  let title = desc.title;
-  const titleY = wrapText(ctx, title, 30, 30, 300, 28);
+  const titleY = wrapText(ctx, desc.content, 30, textTop, 210, 28);
   ctx.setFontSize(18);
-  ctx.fillText('特价：', 30, titleY + 28);
-  ctx.setFontSize(22);
-  ctx.setFillStyle('#f5090c');
-  ctx.fillText('¥' + desc.price, 70, titleY + 28);
-
+  const titleY2 = wrapText(ctx, desc.translation, 30, titleY + 40, 250, 28);
+  ctx.fillText(' ——', 30, titleY2 + 40);
+  ctx.setFontSize(16);
+  ctx.setFillStyle('#fff');
+  ctx.fillText(desc.author, 90, titleY2 + 40);
   ctx.stroke();
+
+  if (image2) {
+    drawImageAndRect(ctx, image2.path, 200, titleY2 + 200 - dx, 120, 120);
+  }
   ctx.draw(false, () => {
     Taro.showLoading({
-      title: '保存到本地……',
+      title: '保存到本地……'
     });
     saveCanvasToPhotosAlbum(canvasId);
   });
@@ -194,7 +249,7 @@ export function downloadFiles(options) {
     proxy.after('download_files', res.length, data => {
       console.log(data);
       Taro.showToast({
-        title: `全部保存成功！`,
+        title: `全部保存成功！`
       });
       // TODO copy description
       if (description) {
@@ -205,7 +260,7 @@ export function downloadFiles(options) {
     // 异步保存
     res.forEach(item => {
       Taro.saveImageToPhotosAlbum({
-        filePath: item.tempFilePath,
+        filePath: item.tempFilePath
       })
         .then(() => {
           count++;
@@ -233,6 +288,7 @@ export function downloadFiles(options) {
 
 function drawImageAndRect(ctx, path, x, y, width, height) {
   ctx.strokeRect(x, y, width, height);
+  // console.log(path, x, y, width, height);
   ctx.drawImage(path, x, y, width, height);
 }
 

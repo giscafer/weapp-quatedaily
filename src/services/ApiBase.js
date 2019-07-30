@@ -4,9 +4,8 @@
  * @description: API URL 基类，为了方便取得对应微服务的api url地址
  */
 
-
-import { BASEURL, DOMAIN_API } from "../config/config";
-import { post, anonymousPost, get } from "./http.services";
+import { BASEURL, DOMAIN_API } from '../config/config';
+import { post, anonymousPost, get } from './http.services';
 
 export default class ApiBase {
   constructor(base) {

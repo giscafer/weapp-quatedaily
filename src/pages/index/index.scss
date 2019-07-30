@@ -1,120 +1,135 @@
+.share-canvas {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  position: fixed;
+  top: -10000px;
+  // top: 100px;
+}
+
 .bg {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .bg-modal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #333;
-    opacity: 0.2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; // background: linear-gradient(#fff, #333);
+  // opacity: 0.4;
 }
 
 .date-show {
-    margin-bottom: 20px;
-    text {
-        color: #38c6aa;
-    }
-    .day {
-        font-weight: 500;
-        font-size: 88px;
-    }
-    .month {
-        font-size: 48px;
-        margin-left: 15px;
-    }
-    .year {
-        font-size: 48px;
-        margin-left: 15px;
-    }
+  margin-bottom: 20px;
+  text {
+    color: #38c6aa;
+  }
+  .day {
+    font-weight: 500;
+    font-size: 88px;
+  }
+  .month {
+    font-size: 48px;
+    margin-left: 15px;
+  }
+  .year {
+    font-size: 48px;
+    margin-left: 15px;
+  }
 }
 
-.quote {
-    position: absolute;
-    bottom: 180px;
+.main {
+  background: rgba(0, 0, 0, 0.5);
+  height: auto;
+  position: absolute;
+  width: 100%;
+  bottom: 180px;
+  .quote {
     padding: 0 32px 60px 32px;
     .content {
-        display: block;
-        color: #fff;
-        font-size: 36px;
+      display: block;
+      color: #fff;
+      font-size: 36px;
     }
     .trans {
-        display: block;
-        color: #fff;
-        margin-top: 20px;
-        font-size: 32px;
+      display: block;
+      color: #fff;
+      margin-top: 20px;
+      font-size: 32px;
+      opacity: 1;
     }
     .author {
-        display: block;
-        color: #fff;
-        margin-top: 20px;
-        text-align: right;
+      display: block;
+      color: #fff;
+      margin-top: 20px;
+      text-align: right;
     }
+  }
 }
 
 .down {
-    position: fixed;
-    top: 32px;
-    right: 212px;
-    height: 38px;
-    width: 38px;
+  position: fixed;
+  top: 32px;
+  right: 212px;
+  height: 38px;
+  width: 38px;
 }
 
 .share {
-    position: fixed;
-    top: 32px;
-    right: 22px;
-    height: 38px;
-    width: 38px;
+  position: fixed;
+  top: 32px;
+  right: 22px;
+  height: 38px;
+  width: 38px;
 }
 
 .link {
-    position: fixed;
-    top: 28px;
-    right: 80px;
-    height: 42px;
-    width: 42px;
+  position: fixed;
+  top: 28px;
+  right: 80px;
+  height: 42px;
+  width: 42px;
 }
 
 .copy {
-    position: fixed;
-    top: 32px;
-    right: 150px;
-    height: 36px;
-    width: 36px;
+  position: fixed;
+  top: 32px;
+  right: 150px;
+  height: 36px;
+  width: 36px;
 }
 
 button::after {
-    border: none;
+  border: none;
 }
 
 button {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .loading {
-    display: block;
-    width: 100px;
-    text-align: center;
-    margin: 5px auto;
+  display: block;
+  width: 100px;
+  text-align: center;
+  margin: 5px auto;
 }
 
 .operate {
-    position: fixed;
-    bottom: 50px;
-    left: 35%;
-    .at-button {
-        display: inline-block;
-    }
-    .at-button--secondary{
-        background-color: transparent!important;
-        color: #38c6aa;
-        border-color: #38c6aa!important;
-    }
-    .right {
-        margin-left: 50px;
-    }
+  position: fixed;
+  bottom: 50px;
+  left: 35%;
+  .at-button {
+    display: inline-block;
+  }
+  .at-button--secondary {
+    background-color: transparent !important;
+    color: #38c6aa;
+    border-color: #38c6aa !important;
+    font-weight: bold;
+  }
+  .right {
+    margin-left: 50px;
+  }
 }
