@@ -1,6 +1,6 @@
 {
   "name": "quatedaily",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "每日鸡汤",
   "main": "index.js",
