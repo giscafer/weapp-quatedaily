@@ -249,7 +249,7 @@ class Index extends Component {
       canvasId: 'shareCanvas',
       imgUrls: [
         info.imgUrl,
-        'http://ww1.sinaimg.cn/large/940e68eegy1g5hy9qr2vjj20by0bytb3.jpg'
+        'https://ww1.sinaimg.cn/large/940e68eegy1g5hy9qr2vjj20by0bytb3.jpg'
       ],
       puzzlesType: 'single_graph',
       description: info

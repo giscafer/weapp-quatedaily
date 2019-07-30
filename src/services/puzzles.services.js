@@ -56,13 +56,18 @@ export const images2Canvas = options => {
     promiseList.push(Taro.getImageInfo({ src: url }));
   }
   Taro.showLoading({ title: '下载图片中…' });
-  Promise.all(promiseList).then(res => {
-    if (puzzlesType === 'composite_graph') {
-      compositeGraph(res, canvasId, description);
-    } else if (puzzlesType === 'single_graph') {
-      singleGraph(res, canvasId, description);
-    }
-  });
+  Promise.all(promiseList)
+    .then(res => {
+      Taro.hideLoading();
+      if (puzzlesType === 'composite_graph') {
+        compositeGraph(res, canvasId, description);
+      } else if (puzzlesType === 'single_graph') {
+        singleGraph(res, canvasId, description);
+      }
+    })
+    .catch(err => {
+      Taro.showLoading({ title: JSON.parse(err) });
+    });
 };
 
 /**
@@ -76,7 +81,7 @@ export const saveCanvasToPhotosAlbum = canvasId => {
     })
     .then(res => {
       console.log(res);
-      Taro.showToast({ title: '已保存到相册' });
+      Taro.showToast({ title: '图片已保存到相册' });
     })
     .catch(() => {
       Taro.hideLoading();
@@ -210,9 +215,16 @@ function singleGraph(images, canvasId, desc) {
   ctx.setTextAlign('left');
   ctx.setFillStyle('#fff');
   ctx.setFontSize(22);
-  const titleY = wrapText(ctx, desc.content, 30, textTop, 210, 28);
+  const titleY = wrapText(ctx, desc.content, 30, textTop, width - 30, 28);
   ctx.setFontSize(18);
-  const titleY2 = wrapText(ctx, desc.translation, 30, titleY + 40, 250, 28);
+  const titleY2 = wrapText(
+    ctx,
+    desc.translation,
+    30,
+    titleY + 40,
+    width - 30,
+    28
+  );
   ctx.fillText(' ——', 30, titleY2 + 40);
   ctx.setFontSize(16);
   ctx.setFillStyle('#fff');
