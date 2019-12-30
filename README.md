@@ -1,6 +1,7 @@
 # weapp-quatedaily
 每日鸡汤
 
+(email: 	gisbbs@126.com)
 
 ![](./qr.jpg)
 
